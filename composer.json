@@ -1,0 +1,13 @@
+{
+    "name": "double-null/erosklad-parser",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app"
+        }
+    },
+    "require": {
+        "catfan/medoo": "^1.7",
+        "symfony/dom-crawler": "^5.2",
+        "symfony/css-selector": "^5.2"
+    }
+}
