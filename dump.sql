@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 14 2020 г., 16:35
+-- Время создания: Дек 15 2020 г., 10:44
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.4.5
 
@@ -46,6 +46,7 @@ CREATE TABLE `products` (
   `name` varchar(200) NOT NULL,
   `description` text NOT NULL,
   `parameters` text NOT NULL,
+  `photo` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

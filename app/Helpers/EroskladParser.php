@@ -50,12 +50,14 @@ class EroskladParser extends WebTraveler
                 ];
             }
         );
+        $photo = $crawler->filter('.item-card__image-box a')->attr('href');
         return [
             'mark' => $clearMark,
             'name' => $crawler->filter('.item-card__title')->html(),
             'description' => $crawler
                 ->filter('div[data-descriptionswitch=description]')->html(),
             'parameters' => $parameters,
+            'photo' => $photo,
             'price' => 0,
         ];
     }
