@@ -44,7 +44,7 @@ if ($productsLinks) {
         $product['parameters'] = json_encode($product['parameters']);
         if ($product['photo']) {
             $type = explode('.', $product['photo']);
-            $imageName = $product['mark'].'.'.$type[1];
+            $imageName = str_replace('/', '_', $product['mark']).'.'.$type[1];
             $localImage = $imagePath.$imageName;
             App\Helpers\FileSystem::saveFile($domain.$product['photo'], $localImage);
             $product['photo'] = $imageName;
