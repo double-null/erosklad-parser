@@ -4,7 +4,7 @@ require_once './vendor/autoload.php';
 
 $domain = 'https://www.erosklad.com';
 
-//прописать полный путь к изображению, иначе с крона работать не будет!
+//прописать полный путь к папке с изображениями, иначе с крона работать не будет!
 $imagePath = $_SERVER['DOCUMENT_ROOT'].'/images/';
 
 $dbSettings = [
