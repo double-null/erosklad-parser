@@ -28,12 +28,15 @@ if ($category) {
     $productsLinks = App\Helpers\EroskladParser::factory()
         ->setUrl($domain.$category['link'])
         ->getProducts();
+    foreach ($productsLinks as $key => $productsLink) {
+        $productsLinks[$key]['category_id'] = $category['id'];
+    }
     $db->insert('product_links', $productsLinks);
     $db->update('categories', ['scanned' => 1], ['id' => $category['id']]);
     die;
 }
 
-$productsLinks = $db->select('product_links', ['id', 'link'], [
+$productsLinks = $db->select('product_links', ['id', 'link', 'category_id'], [
     'scanned' => 0,
     'LIMIT' => 10,
 ]);
@@ -51,6 +54,7 @@ if ($productsLinks) {
         }
         $db->update('product_links', ['scanned' => 1], ['id' => $item['id']]);
         if (!$db->has('products', ['mark' => $product['mark']])) {
+            $product['category_id'] = $item['category_id'];
             $db->insert('products', $product);
         }
     }
