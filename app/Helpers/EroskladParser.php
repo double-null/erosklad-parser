@@ -39,7 +39,14 @@ class EroskladParser extends WebTraveler
 
     public function getProduct()
     {
-        $crawler = new Crawler($this->request());
+        $page = $this->request();
+        if ($this->httpCode == 301) {
+            $page = $this->setUrl($this->redirectUrl)->request();
+            if ($this->httpCode == 301) {
+                $page = $this->setUrl($this->redirectUrl)->request();
+            }
+        }
+        $crawler = new Crawler($page);
         $mark = $crawler->filter('.item-card__short-info-article')->text();
         $clearMark = trim(explode(':', $mark)[1]);
         $parameters = $crawler->filter('.item-card__info-characteristic-table tr')->each(

@@ -10,6 +10,10 @@ class WebTraveler
 
     protected $postRequest = 0;
 
+    protected $httpCode;
+
+    protected $redirectUrl;
+
     public static function factory()
     {
         $class = static::class;
@@ -45,6 +49,8 @@ class WebTraveler
         curl_setopt($curl,CURLOPT_HEADER,true);
         curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
         $response = curl_exec($curl);
+        $this->httpCode = curl_getinfo($curl)['http_code'];
+        $this->redirectUrl = curl_getinfo($curl)['redirect_url'];
         curl_close($curl);
         return $response;
     }

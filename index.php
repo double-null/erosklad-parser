@@ -44,6 +44,7 @@ $productsLinks = $db->select('product_links', ['id', 'link', 'category_id'], [
 if ($productsLinks) {
     foreach ($productsLinks as $item) {
         $product = App\Helpers\EroskladParser::factory()->setUrl($item['link'])->getProduct();
+        $productParamsOriginal = $product['parameters'];
         $product['parameters'] = json_encode($product['parameters']);
         if ($product['photo']) {
             $type = explode('.', $product['photo']);
@@ -56,9 +57,29 @@ if ($productsLinks) {
         if (!$db->has('products', ['mark' => $product['mark']])) {
             $product['category_id'] = $item['category_id'];
             $db->insert('products', $product);
+            $productId = $db->id();
+            if (is_array($productParamsOriginal)) {
+                foreach ($productParamsOriginal as $key => $parameter) {
+                    $existingParam = $db->get('parameters', ['id'],  ['name' => $parameter['attribute']]);
+                    if (!$existingParam) {
+                        $db->insert('parameters', [
+                            'name' => $parameter['attribute'],
+                            'type' => 1,
+                            'unit' => '',
+                        ]);
+                        $paramId = $db->id();
+                    } else {
+                        $paramId = $existingParam['id'];
+                    }
+                    $db->insert('product_parameters', [
+                        'product_id' => $productId,
+                        'parameter_id' => $paramId,
+                        'value' => $parameter['value']
+                    ]);
+                }
+            }
         }
     }
-    die;
 }
 
 echo "Done...";
