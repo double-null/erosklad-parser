@@ -58,14 +58,24 @@ class EroskladParser extends WebTraveler
             }
         );
         $photo = $crawler->filter('.item-card__image-box a')->attr('href');
+        $photos = $crawler->filter('.item-card__carousel a')->each(
+            function (Crawler $node) {
+                return [
+                    'photo' => $node->attr('href'),
+                ];
+            }
+        );
         return [
-            'mark' => $clearMark,
-            'name' => $crawler->filter('.item-card__title')->html(),
-            'description' => $crawler
-                ->filter('div[data-descriptionswitch=description]')->html(),
+            'mainInfo' => [
+                'mark' => $clearMark,
+                'name' => $crawler->filter('.item-card__title')->html(),
+                'description' => $crawler
+                    ->filter('div[data-descriptionswitch=description]')->html(),
+                'price' => 0,
+            ],
             'parameters' => $parameters,
-            'photo' => $photo,
-            'price' => 0,
+            'coverPhoto' => $photo,
+            'photos' => $photos,
         ];
     }
 }
