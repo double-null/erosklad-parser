@@ -1,9 +1,10 @@
 {
-    "name": "double-null/erosklad-parser",
+    "name": "double-null/erotic-parsers",
     "autoload": {
         "psr-4": {
             "App\\": "app"
-        }
+        },
+        "files": ["settings/database.php"]
     },
     "require": {
         "catfan/medoo": "^1.7",

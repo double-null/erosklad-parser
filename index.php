@@ -10,15 +10,7 @@ $domain = 'https://www.erosklad.com';
 
 $imagePath = 'C:/openserver/OpenServer/domains/sex-shop.loc/images/';
 
-$dbSettings = [
-    'database_type' => 'mysql',
-    'database_name' => 'ero_parser',
-    'server' => 'localhost',
-    'username' => 'root',
-    'password' => 'root'
-];
-
-$db = new Medoo\Medoo($dbSettings);
+$db = new Medoo\Medoo(database());
 
 if ($db->count('category_links') == 0) {
     $categories = EroskladParser::factory()->getCategories();
@@ -49,7 +41,6 @@ $productsLinks = $db->select('product_links', ['id', 'link', 'category_id'], [
     'scanned' => 0,
     'LIMIT' => 10,
 ]);
-
 
 if ($productsLinks) {
     foreach ($productsLinks as $item) {
